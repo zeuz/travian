@@ -1,0 +1,10 @@
+travian queue 0.1
+
+Requerimientos:
+php 4
+mysql
+expect
+
+Instalacion:
+cambiar USER,DB,PASS config.inc.php
+cambiar USER,DB,PASS worker/travian_worker.php
