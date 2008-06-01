@@ -4,7 +4,11 @@ Requerimientos:
 php 4
 mysql
 expect
+tor
+privoxy
+smarty
 
 Instalacion:
 cambiar USER,DB,PASS config.inc.php
 cambiar USER,DB,PASS worker/travian_worker.php
+cambiar el puerto de control de tor en work/travia_nueva_ip.sh
