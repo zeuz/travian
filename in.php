@@ -94,7 +94,7 @@ function status($msg){
      $smarty->assign(EDIFICIO,$res[nombre]);
      $smarty->assign(TIPO,$tipo);
      $smarty->assign(FECHAT,$res[fechat]);
-     $rowreali.=$smarty->fetch("rowreali.tpl");
+        $rowreali.=$smarty->fetch("rowreali.tpl");
     $nreali++;
 }
 
@@ -105,7 +105,7 @@ function status($msg){
 
  $smarty->assign("MSG",$msg);
  $smarty->assign("EDIFICIOS",$edificios);
- $smarty->assign("USER",$username);
+ $smarty->assign("USERNAME",$username);
  $smarty->assign("OP",$option); 
  $smarty->assign("IP",$clientip);
  $smarty->assign("RESULTADOSB",$resultados); 
