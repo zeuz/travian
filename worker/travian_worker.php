@@ -21,18 +21,18 @@ while(1){
   //echo "[$olduser,$user]\n";
   if($olduser!==$user){
        system("./tor_nueva_ip.sh");
-      echo "nueva ip dormir 60\n";
-       sleep(60); //dormir un minuto
+      echo "nueva ip dormir 20\n";
+       sleep(20); //dormir un minuto
     }else{
-     echo "mismo user dormir 30\n";
-       sleep(30);
+     echo "mismo user dormir 10\n";
+       sleep(10);
      }
    
  $tr=new Travian($user,$res[tpass],$res[tserver]);
     if($tr->login()){
    $realizado=false;
    $ip=$tr->ip;
-   echo "\n$user, $tr->madera_hora/$tr->madera , $tr->barro_hora/$tr->barro, $tr->hierro_hora/$tr->hierro,$tr->cereal_hora/$tr->cereal, $tr->consumo/hora\n";
+   echo "\n$user, $tr->madera_hora/$tr->madera , $tr->barro_hora/$tr->barro, $tr->hierro_hora/$tr->hierro,$tr->cereal_hora/$tr->cereal, $tr->consumo_hora/hora\n";
    if($res[tipo]=="U"){
     echo "upgrade $res[parcela]\n";
       if($tr->upgrade($res[parcela])) $realizado=true;
