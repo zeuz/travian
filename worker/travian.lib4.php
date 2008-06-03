@@ -151,7 +151,7 @@ class Travian {
     }
     //buscar el link upgrade en edificios
     if($parcela>=19 && $parcela<=40){
-      if (preg_match("#<a href=\"(dorf[12].php\?a=[1-9][1-9]\&id=".$parcela."\&c=.*)\">.*</a>#",$tmp_build,$match)){
+      if (preg_match("#<a href=\"(dorf[12].php\?a=".$parcela."\&c=.*)\">.*</a>#",$tmp_build,$match)){
         $link_upgrade=$match[1];
         $this->d_("\n\n $link_upgrade\n");
         $tmp_cmd=$this->curl_->get($this->server."/".$link_upgrade);
