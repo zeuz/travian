@@ -114,6 +114,6 @@
   </tr>
 
 </table>
-<input type="hidden" name="username" value="zeuz">
+<input type="hidden" name="username" value="{$USERNAME}">
 <input type="hidden" name="op" value "">
 </form><br><br>
