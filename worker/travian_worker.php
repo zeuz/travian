@@ -9,27 +9,24 @@ $db1=mysql_connect($dbhost,$dbuser,$dbpassword);
 
 $olduser="";
 $user="";
-$sql0="SELECT * FROM trabajos WHERE terminado='N' ORDER BY id ASC";
-
 while(1){
 
- $q0=mysql_query($sql0,$db1);
+$sqlu="SELECT distinct tuser,tserver FROM trabajos WHERE terminado='N' ORDER BY id ASC, tuser";
 
- while($res=mysql_fetch_assoc($q0)){
+$qu=mysql_query($sqlu,$db1);
+
+while($rsu=mysql_fetch_assoc($qu)){
+ $tmp_user=$rsu[tuser];
+ $tmp_server=$rsu[tserver];
+// $sql0="SELECT * FROM trabajos WHERE terminado='N' ORDER BY id ASC";
+  $sql0="SELECT * FROM trabajos WHERE tuser='$tmp_user' and tserver='$tmp_server' and terminado='N' limit 1";
+
+  $q0=mysql_query($sql0,$db1);
+  while($res=mysql_fetch_assoc($q0)){
   $id=$res[id];
   $user=$res[tuser];
-  //echo "[$olduser,$user]\n";
-  if($olduser!==$user){
-       system("./tor_nueva_ip.sh");
-      echo "nueva ip dormir 20\n";
-       sleep(20); //dormir un minuto
-    }else{
-     echo "mismo user dormir 10\n";
-       sleep(10);
-     }
-   
- $tr=new Travian($user,$res[tpass],$res[tserver]);
-    if($tr->login()){
+  $tr=new Travian($user,$res[tpass],$res[tserver]);
+  if($tr->login()){
    $realizado=false;
    $ip=$tr->ip;
    echo "\n$user, $tr->madera_hora/$tr->madera , $tr->barro_hora/$tr->barro, $tr->hierro_hora/$tr->hierro,$tr->cereal_hora/$tr->cereal, $tr->consumo_hora/hora\n";
@@ -52,5 +49,11 @@ while(1){
    }
   $olduser=$user;
  }//trabajos
-sleep(30);
+ system("./tor_nueva_ip.sh");
+ echo "nueva ip dormir 50\n";
+ sleep(50); //dormir un minuto
+
+}
+echo "Loop:\n";
+sleep(90);
 }//loop infinito
