@@ -12,6 +12,7 @@ global $db1;
 global $smarty;
 global $username;
 global $clientip;
+global $queue;
 
 $query = mysql_query("SELECT *  FROM usuarios WHERE login='$username' AND pass='$password'",$db1);
 $result= mysql_fetch_assoc($query);
@@ -29,7 +30,11 @@ function status($msg){
  global $username;
  global $resultados;
  global $clientip;
+ global $queue;
 
+ $q1=mysql_query("SELECT * FROM usuarios where login='$username';"); 
+ $res=mysql_fetch_array($q1);
+ $queue=$res[queue];
 
  $q1= mysql_query("SELECT * FROM edificios;");
   while($res=mysql_fetch_array($q1)){
@@ -63,6 +68,9 @@ function status($msg){
      $smarty->assign(EDIFICIO,$res[nombre]);  
      $smarty->assign(TIPO,$tipo);
      $smarty->assign(FECHAQ,$res[fechaq]);
+     $lserver=substr($res[tserver],0,2);  
+     $link_parcela="view.php?user=$res[tuser]&server=$lserver";
+     $smarty->assign(LINKP,$link_parcela);
      $rowactivos.=$smarty->fetch("rowactivos.tpl");
      $nactivos++; 
 }
@@ -71,6 +79,12 @@ function status($msg){
  $smarty->assign("ACTIVOS",$rowactivos);
  $smarty->assign("BOTON_QUITAR",$boton_quitar);
  }
+ if($queue=='A'){
+ $boton_queue="<input type=\"submit\" name=\"submit\" value=\"Pausar\">";
+ }else{
+ $boton_queue="<input type=\"submit\" name=\"submit\" value=\"Reanudar\">";
+ }
+ $smarty->assign("BOTON_QUEUE",$boton_queue);
 
  $q2= mysql_query("SELECT trabajos.*,nombre,SUBSTRING(tserver,1,2) as srv FROM trabajos left join edificios on edificios.id=edificio WHERE login='$username' and terminado='Y' ORDER BY fechat DESC");
  
@@ -94,6 +108,11 @@ function status($msg){
      $smarty->assign(EDIFICIO,$res[nombre]);
      $smarty->assign(TIPO,$tipo);
      $smarty->assign(FECHAT,$res[fechat]);
+
+     $lserver=substr($res[tserver],0,2);
+     $link_parcela="view.php?user=$res[tuser]&server=$lserver";
+     $smarty->assign(LINKP,$link_parcela);
+
         $rowreali.=$smarty->fetch("rowreali.tpl");
     $nreali++;
 }
@@ -119,14 +138,29 @@ if ($username==="admin"){
 }
 
 /*************************************/
-function agrega($username,$server,$user,$pass,$parcela,$edificio){
+function agrega($username,$server,$user,$pass,$parcela,$parcelas,$edificio){
 //echo"agrega($username,$server,$user,$pass,$parcela,$edificio);";
 global $db1;
 global $smarty;
 global $username;
 global $clientip;
+
+if (strlen($parcelas)>2&strlen($user)>2&&strlen($pass)>2){
+  $p=Array();
+  $p=split(",",$parcelas);
+  $tipo="U";
+  $edificio="";
+  foreach($p as $parcela){
+  if($parcela>0&&$parcela<41){
+   $sql0="INSERT INTO trabajos values ('','$username','$server','$user','$pass','$parcela','$edificio','$tipo','N','',NOW(),'')";
+   // echo $sql0;
+   $q1=mysql_query($sql0,$db1);
+   }
+  }
+  $msg="Trabajos agregados";
+
+}else{
 if($parcela>0&&strlen($user)>2&&strlen($pass)>2&&$parcela<41){
- 
  $tipo="U";
  if ($parcela>18 && strlen($edificio)<1){
    $tipo="U";
@@ -143,8 +177,9 @@ if($parcela>0&&strlen($user)>2&&strlen($pass)>2&&$parcela<41){
 // echo $sql0;
  $q1=mysql_query($sql0,$db1);
  $msg="Trabajo agregado";
-}else{
+ }else{
   $msg="Error";
+ }
 }
  status($msg);
 }
@@ -164,15 +199,24 @@ function quitar($username,$chk){
  $msg="";
  status($msg); 
 }
-
-
+/*******************************************/
+function toogle_q($username){
+ global $db1;
+ $q0=mysql_query("update usuarios set queue=IF(queue='A','D','A') where login='$username'");
+ $msg="";
+ status($msg);
+}
 /***************************************************/
 switch($submit){
    case 'Agregar':
-           agrega($username,$server,$user,$pass,$parcela,$edificio);  
+           agrega($username,$server,$user,$pass,$parcela,$parcelas,$edificio);  
           break; 
    case 'Quitar':
            quitar($username,$chk);
+           break;
+   case 'Pausar':
+   case 'Reanudar':
+           toogle_q($username);
            break;
    default:
            login($password);
