@@ -41,6 +41,18 @@
   </tr>
   <tr>
     <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan=3>Parcelas:
+      <input name="parcelas" type="text" size="54" ><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      id parecela separados por coma "2,3,35,26,5,6,9"
+     </td>
+ 
+    </tr>
+
+
+  <tr>
+    <td>&nbsp;</td>
     <td>Construir:</td>
     <td><select name="edificio">{$EDIFICIOS}
     <OPTION value="" selected> </OPTION>
@@ -59,7 +71,7 @@
   <tr>
   <td>&nbsp;</td>
     <td><b>Trabajos por hacer: </b></td>
-    <td>&nbsp;</td>
+    <td>{$BOTON_QUEUE}</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>

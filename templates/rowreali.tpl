@@ -1,7 +1,7 @@
  <tr>
     <td>{$SERVER}</td>
     <td>{$IP}</td>
-    <td>{$USER}</td>
+    <td><a href="{$LINKP}">{$USER}</a></td>
     <td>{$PARCELA} &nbsp; {$TIPO} &nbsp; {$EDIFICIO} </td>
     <td>{$FECHAT}</td>
  </tr>
