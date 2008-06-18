@@ -1,10 +1,10 @@
 <?
 include_once("travian.lib4.php");
-$dbhost="127.0.0.1";
-$dbuser="root";
-$dbpassword="km33jc24k";
-$dbname="travian";
-$path_dump="/usr/local/www/data/travian/parcela";
+$dbhost="HOST";
+$dbuser="USER";
+$dbpassword="PASS";
+$dbname="DB";
+$path_dump="PATH";
 $db1=mysql_connect($dbhost,$dbuser,$dbpassword);
 @mysql_select_db($dbname,$db1);
 
