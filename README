@@ -12,3 +12,5 @@ Instalacion:
 cambiar USER,DB,PASS config.inc.php
 cambiar USER,DB,PASS worker/travian_worker.php
 cambiar el puerto de control de tor en work/travia_nueva_ip.sh
+descompactar el paquete grafico en esta carpeta
+cambiar PATH en view.php
