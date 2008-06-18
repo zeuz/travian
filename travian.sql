@@ -3,6 +3,7 @@ CREATE TABLE usuarios (
   login varchar(10) NOT NULL,
   pass varchar(20) NOT NULL,
   op char(2) NOT NULL default 'U',
+  queue char(1) NOT NULL default 'A',
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
