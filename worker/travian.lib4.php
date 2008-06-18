@@ -89,6 +89,7 @@ class Travian {
     
        if($this->login_valido_($aldea)){
            $this->dorf1_=$aldea;
+           $this->dorf2_=$this->curl_->get($this->server."/dorf2.php");
            $this->lee_recursos_();
            return true;
        }else{
@@ -184,4 +185,14 @@ class Travian {
   function d_($str){
    if($this->debug) echo $str;
      }
+
+  function get_aldea(){
+     return $this->dorf1_;
+   }
+
+  function get_aldea_centro(){
+     return $this->dorf2_;
+   }
+
+
 }
