@@ -14,6 +14,14 @@ global $username;
 global $clientip;
 global $queue;
 
+$bad_strings = array("\b", "\0", "\n", "\r", "\t", "\z",
+                     "/n", "/0", "/n", "/r", "/t", "/z",
+                     "$", "'", '"', "%", ";", "_", "*",
+                     "`", "drop table");
+                     
+$username = str_replace($bad_strings, "", $username); //Avoid SQL Injection
+$password = str_replace($bad_strings, "", $password); //Avoid SQL Injection
+
 $query = mysql_query("SELECT *  FROM usuarios WHERE login='$username' AND pass='$password'",$db1);
 $result= mysql_fetch_assoc($query);
 
